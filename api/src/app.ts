@@ -2,10 +2,13 @@ import express from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
 import { defaultErrorHandler } from './controllers/error-handler';
+import flickrRoute from './routes/flickr-routes';
 
 const app = express();
 
 app.use(json({ limit: '10kb' }));
+
+app.use('/api/v1/flickr', flickrRoute);
 
 // Welcome Page
 app.get('/api', (_req, res) => {
