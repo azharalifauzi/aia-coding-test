@@ -10,4 +10,6 @@ type Photo = {
   id: string;
   title: string;
   url: string;
+  ownername: string;
+  views: string;
 };
