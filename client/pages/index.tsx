@@ -1,4 +1,5 @@
 import { Typography, Grid, Container, Box, makeStyles, InputBase, Paper } from '@material-ui/core';
+import { Pagination } from '@material-ui/lab';
 import { Search, Cancel } from '@material-ui/icons';
 import { CardPhoto } from 'components';
 import { useQuery } from 'react-query';
@@ -41,19 +42,26 @@ const useStyle = makeStyles({
   searchIcon: {
     fill: '#9e9ea7',
   },
+  paginationContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '1.5rem',
+  },
 });
 
 export default function Home() {
   const classes = useStyle();
   const [searchVal, setSearchVal] = useState<string>('');
   const [search, setSearch] = useState<string>('');
+  const [page, setPage] = useState<number>(1);
 
   const { data, isFetchedAfterMount } = useQuery<PhotosResponse>(
-    ['photos', search],
+    ['photos', search, page],
     async () => {
       let filter = [];
 
       if (search) filter.push(`search=${search}`);
+      if (page) filter.push(`page=${page}`);
 
       if (filter.length > 0) filter[0] = `&${filter[0]}`;
 
@@ -130,6 +138,13 @@ export default function Home() {
               </Grid>
             ))}
           </Grid>
+          <Box className={classes.paginationContainer}>
+            <Pagination
+              count={data?.maxPage || 1}
+              page={page}
+              onChange={(_e, page) => setPage(page)}
+            />
+          </Box>
         </Container>
       </main>
     </>
