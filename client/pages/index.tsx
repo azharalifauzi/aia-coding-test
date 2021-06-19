@@ -99,19 +99,25 @@ export default function Home() {
             Find your insipiration from the best photographers
           </Typography>
         </Box>
-        <Paper onSubmit={handleSearch} component="form" className={classes.searchContainer}>
-          <Search className={classes.searchIcon} />
-          <InputBase
-            onChange={(e) => setSearchVal(e.target.value)}
-            value={searchVal}
-            id="search"
-            className={classes.searchInput}
-            placeholder="Search photos..."
-          />
-          {searchVal ? (
-            <Cancel onClick={() => setSearchVal('')} className={classes.searchIcon} />
-          ) : null}
-        </Paper>
+        <Box style={{ paddingInline: '1rem' }}>
+          <Paper onSubmit={handleSearch} component="form" className={classes.searchContainer}>
+            <Search className={classes.searchIcon} />
+            <InputBase
+              onChange={(e) => setSearchVal(e.target.value)}
+              value={searchVal}
+              id="search"
+              className={classes.searchInput}
+              placeholder="Search photos..."
+            />
+            {searchVal ? (
+              <Cancel
+                style={{ fontSize: '1.2rem' }}
+                onClick={() => setSearchVal('')}
+                className={classes.searchIcon}
+              />
+            ) : null}
+          </Paper>
+        </Box>
         <Container className={classes.photosContainer} maxWidth="xl">
           <Grid component="ol" container spacing={2}>
             {data?.photos.map(({ id, url, title, ownername, views }) => (
