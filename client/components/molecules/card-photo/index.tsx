@@ -1,4 +1,5 @@
 import { Box, makeStyles, Typography } from '@material-ui/core';
+import { Skeleton } from '@material-ui/lab';
 import { Visibility } from '@material-ui/icons';
 import Image from 'next/image';
 import clsx from 'clsx';
@@ -11,6 +12,7 @@ interface Props {
   height?: number;
   views?: string;
   ownername?: string;
+  isLoading?: boolean;
 }
 
 const useStyle = makeStyles({
@@ -67,24 +69,31 @@ const CardPhoto: React.FC<Props> = ({
   height = 4,
   views,
   ownername,
+  isLoading,
 }) => {
   const classes = useStyle();
 
   return (
     <>
-      <Box className={classes.container}>
-        <Box className={clsx(classes.info, 'title')}>
-          <p className="line-clamp-2">{title}</p>
-        </Box>
-        <Image width={width} height={height} src={src} alt={alt} layout="responsive" />
-      </Box>
-      <Box className={classes.additionalInfo}>
-        <Typography className={classes.ownerName}>{ownername}</Typography>
-        <Box className={classes.viewsContainer}>
-          <Visibility className={classes.views} />
-          <Typography className={classes.views}>{views}</Typography>
-        </Box>
-      </Box>
+      {isLoading ? (
+        <Skeleton variant="rect" height={280} style={{ borderRadius: 8 }} />
+      ) : (
+        <>
+          <Box className={classes.container}>
+            <Box className={clsx(classes.info, 'title')}>
+              <p className="line-clamp-2">{title}</p>
+            </Box>
+            <Image width={width} height={height} src={src} alt={alt} layout="responsive" />
+          </Box>
+          <Box className={classes.additionalInfo}>
+            <Typography className={classes.ownerName}>{ownername}</Typography>
+            <Box className={classes.viewsContainer}>
+              <Visibility className={classes.views} />
+              <Typography className={classes.views}>{views}</Typography>
+            </Box>
+          </Box>{' '}
+        </>
+      )}
     </>
   );
 };

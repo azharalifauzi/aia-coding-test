@@ -48,7 +48,7 @@ export default function Home() {
   const [searchVal, setSearchVal] = useState<string>('');
   const [search, setSearch] = useState<string>('');
 
-  const { data } = useQuery<PhotosResponse>(
+  const { data, isFetchedAfterMount } = useQuery<PhotosResponse>(
     ['photos', search],
     async () => {
       let filter = [];
@@ -125,6 +125,7 @@ export default function Home() {
                   height={400}
                   ownername={ownername}
                   views={simplifiedNumber(Number(views))}
+                  isLoading={!isFetchedAfterMount}
                 />
               </Grid>
             ))}
