@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   # server service
@@ -9,7 +9,7 @@ services:
     image: aia-server
     container_name: aia-server
     ports:
-      - "8085:80" # Connect localhost 80 port to container 80 port
+      - '8085:80' # Connect localhost 80 port to container 80 port
     networks:
       - app-network
     volumes:
@@ -23,11 +23,11 @@ services:
     image: azharalifauzi/aia-api
     container_name: aia-api
     volumes:
-      - ./api/:/app
       - /app/node_modules
-      - /app/dist
+      - ./api/:/app/main
+      - ./api/dist/:/app/main/dist/
     ports:
-      - "5000:5000"
+      - '5000:5000'
     networks:
       - app-network
     environment:
@@ -47,7 +47,7 @@ services:
       - /app/node_modules
       - /app/.next
     ports:
-      - "3000:3000"
+      - '3000:3000'
     networks:
       - app-network
     environment:

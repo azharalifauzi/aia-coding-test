@@ -40,4 +40,4 @@ EXPOSE 5000
 
 USER root
 
-CMD [ "./build.js" ]
+CMD [ "node", "./build.js" ]
