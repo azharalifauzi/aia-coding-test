@@ -14,6 +14,8 @@ type FlickrPhotosResponse = {
       isPublic: number;
       isFriend: number;
       isFamily: number;
+      ownername: string;
+      views: string;
     }>;
   };
 };
