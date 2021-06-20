@@ -5,6 +5,7 @@ import { useRouter } from 'next/dist/client/router';
 import Image from 'next/image';
 import { urlSSR } from 'helpers';
 import dayjs from 'dayjs';
+import { LoadingPage } from 'components';
 
 const useStyle = makeStyles({
   imageContainer: {
@@ -71,22 +72,28 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps<StaticProps> = async ({ params }) => {
-  const res = await fetch(urlSSR + `/flickr/photos/${params?.id}`);
+  try {
+    const res = await fetch(urlSSR + `/flickr/photos/${params?.id}`);
 
-  const initialData: PhotoDetailResponse = (await res.json()).data;
+    const initialData: PhotoDetailResponse = (await res.json()).data;
 
-  if (!res.ok) {
+    if (!res.ok) {
+      return {
+        notFound: true,
+      };
+    }
+
+    return {
+      props: {
+        initialData,
+      },
+      revalidate: 60,
+    };
+  } catch (e) {
     return {
       notFound: true,
     };
   }
-
-  return {
-    props: {
-      initialData,
-    },
-    revalidate: 60,
-  };
 };
 
 const PhotoDetailPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> = ({
@@ -95,7 +102,7 @@ const PhotoDetailPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> 
   const Router = useRouter();
   const classes = useStyle();
 
-  if (Router.isFallback) return <div>Loading...</div>;
+  if (Router.isFallback) return <LoadingPage />;
 
   return (
     <Box className={classes.page}>
