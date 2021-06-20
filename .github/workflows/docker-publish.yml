@@ -19,6 +19,9 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: Push to Docker Hub
         run: docker-compose push api client
+        env:
+          BUILD_TARGET: prod
+          FLICKR_API_KEY: ${{ secrets.FLICKR_API_KEY }}
   deploy:
     name: Deploy to Digitalocean
     runs-on: ubuntu-latest
