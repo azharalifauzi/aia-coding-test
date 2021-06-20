@@ -2,7 +2,9 @@ import { Box, makeStyles, Typography } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import { Visibility } from '@material-ui/icons';
 import Image from 'next/image';
+import Link from 'next/link';
 import clsx from 'clsx';
+import { memo } from 'react';
 
 interface Props {
   src: string;
@@ -13,6 +15,7 @@ interface Props {
   views?: string;
   ownername?: string;
   isLoading?: boolean;
+  href: string;
 }
 
 const useStyle = makeStyles({
@@ -70,6 +73,7 @@ const CardPhoto: React.FC<Props> = ({
   views,
   ownername,
   isLoading,
+  href,
 }) => {
   const classes = useStyle();
 
@@ -79,23 +83,34 @@ const CardPhoto: React.FC<Props> = ({
         <Skeleton variant="rect" height={280} style={{ borderRadius: 8 }} />
       ) : (
         <>
-          <Box className={classes.container}>
-            <Box className={clsx(classes.info, 'title')}>
-              <p className="line-clamp-2">{title}</p>
-            </Box>
-            <Image width={width} height={height} src={src} alt={alt} layout="responsive" />
-          </Box>
+          <Link href={href}>
+            <a>
+              <Box className={classes.container}>
+                <Box className={clsx(classes.info, 'title')}>
+                  <p className="line-clamp-2">{title}</p>
+                </Box>
+                <Image
+                  width={width}
+                  height={height}
+                  src={src}
+                  alt={alt}
+                  layout="responsive"
+                  objectFit="cover"
+                />
+              </Box>
+            </a>
+          </Link>
           <Box className={classes.additionalInfo}>
             <Typography className={classes.ownerName}>{ownername}</Typography>
             <Box className={classes.viewsContainer}>
               <Visibility className={classes.views} />
               <Typography className={classes.views}>{views}</Typography>
             </Box>
-          </Box>{' '}
+          </Box>
         </>
       )}
     </>
   );
 };
 
-export default CardPhoto;
+export default memo(CardPhoto);

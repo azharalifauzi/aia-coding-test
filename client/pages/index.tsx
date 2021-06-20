@@ -5,6 +5,7 @@ import { CardPhoto } from 'components';
 import { useQuery } from 'react-query';
 import { simplifiedNumber } from 'helpers';
 import { useState } from 'react';
+import Head from 'next/head';
 
 const useStyle = makeStyles({
   hero: {
@@ -85,6 +86,9 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>Flickr Photos Search</title>
+      </Head>
       <main>
         <Box className={classes.hero}>
           <Typography className={classes.heroHeader} align="center" variant="h3" component="h1">
@@ -140,6 +144,7 @@ export default function Home() {
                   ownername={ownername}
                   views={simplifiedNumber(Number(views))}
                   isLoading={!isFetchedAfterMount}
+                  href={`/photo/${id}`}
                 />
               </Grid>
             ))}
