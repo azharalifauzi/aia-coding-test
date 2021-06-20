@@ -83,7 +83,14 @@ const CardPhoto: React.FC<Props> = ({
             <Box className={clsx(classes.info, 'title')}>
               <p className="line-clamp-2">{title}</p>
             </Box>
-            <Image width={width} height={height} src={src} alt={alt} layout="responsive" />
+            <Image
+              width={width}
+              height={height}
+              src={src}
+              alt={alt}
+              layout="responsive"
+              objectFit="cover"
+            />
           </Box>
           <Box className={classes.additionalInfo}>
             <Typography className={classes.ownerName}>{ownername}</Typography>
