@@ -8,15 +8,21 @@ import dayjs from 'dayjs';
 import { LoadingPage } from 'components';
 import Head from 'next/head';
 
-const useStyle = makeStyles({
+const useStyle = makeStyles((themes) => ({
   imageContainer: {
     borderRadius: '0.5rem',
     overflow: 'hidden',
     marginBlock: '2rem',
   },
   ownerContaienr: {
-    paddingInline: '5rem',
+    paddingInline: '0',
     gap: '1rem',
+    [themes.breakpoints.up('sm')]: {
+      paddingInline: '2rem',
+    },
+    [themes.breakpoints.up('md')]: {
+      paddingInline: '5rem',
+    },
   },
   avatarContainer: {
     borderRadius: '50%',
@@ -25,8 +31,14 @@ const useStyle = makeStyles({
     width: '3.5rem',
   },
   descriptionContainer: {
-    paddingInline: '5rem',
+    paddingInline: '0',
     paddingBlock: '2rem',
+    [themes.breakpoints.up('sm')]: {
+      paddingInline: '2rem',
+    },
+    [themes.breakpoints.up('md')]: {
+      paddingInline: '5rem',
+    },
   },
   page: {
     position: 'relative',
@@ -49,7 +61,7 @@ const useStyle = makeStyles({
     transform: 'rotate(180deg)',
     marginRight: '0.25rem',
   },
-});
+}));
 
 interface StaticProps {
   initialData: PhotoDetailResponse;

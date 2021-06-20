@@ -4,6 +4,7 @@ import { Visibility } from '@material-ui/icons';
 import Image from 'next/image';
 import Link from 'next/link';
 import clsx from 'clsx';
+import { memo } from 'react';
 
 interface Props {
   src: string;
@@ -112,4 +113,4 @@ const CardPhoto: React.FC<Props> = ({
   );
 };
 
-export default CardPhoto;
+export default memo(CardPhoto);
