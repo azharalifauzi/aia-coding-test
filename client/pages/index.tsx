@@ -140,6 +140,7 @@ export default function Home() {
                   ownername={ownername}
                   views={simplifiedNumber(Number(views))}
                   isLoading={!isFetchedAfterMount}
+                  href={`/photo/${id}`}
                 />
               </Grid>
             ))}
