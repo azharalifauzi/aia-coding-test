@@ -7,6 +7,7 @@ import { urlSSR } from 'helpers';
 import dayjs from 'dayjs';
 import { LoadingPage } from 'components';
 import Head from 'next/head';
+import { saveAs } from 'file-saver';
 
 const useStyle = makeStyles((themes) => ({
   imageContainer: {
@@ -117,6 +118,10 @@ const PhotoDetailPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> 
 
   if (Router.isFallback) return <LoadingPage />;
 
+  const handleDownload = () => {
+    saveAs(initialData.photo.url, initialData.title);
+  };
+
   return (
     <>
       <Head>
@@ -175,13 +180,7 @@ const PhotoDetailPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> 
               </Grid>
             </Grid>
             <Grid item>
-              <Button
-                href={initialData.photo.url}
-                download
-                target="_blank"
-                color="secondary"
-                variant="contained"
-              >
+              <Button onClick={handleDownload} color="secondary" variant="contained">
                 Download
               </Button>
             </Grid>
