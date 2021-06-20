@@ -6,15 +6,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest --watchAll --no-cache",
+    "test:ci": "jest"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
+    "@types/file-saver": "^2.0.2",
     "@types/nprogress": "^0.2.0",
     "clsx": "^1.1.1",
     "dayjs": "^1.10.5",
+    "file-saver": "^2.0.5",
     "next": "11.0.0",
     "nprogress": "^0.2.0",
     "react": "17.0.2",
@@ -22,9 +26,16 @@
     "react-query": "^3.17.2"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@types/jest": "^26.0.23",
     "@types/react": "17.0.11",
+    "babel-jest": "^27.0.2",
     "eslint": "7.29.0",
     "eslint-config-next": "11.0.0",
+    "jest": "^27.0.4",
+    "jest-css-modules": "^2.1.0",
+    "ts-jest": "^27.0.3",
     "typescript": "4.3.4"
   }
 }

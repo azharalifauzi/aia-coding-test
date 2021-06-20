@@ -80,11 +80,11 @@ const CardPhoto: React.FC<Props> = ({
   return (
     <>
       {isLoading ? (
-        <Skeleton variant="rect" height={280} style={{ borderRadius: 8 }} />
+        <Skeleton data-testid="skeleton" variant="rect" height={280} style={{ borderRadius: 8 }} />
       ) : (
         <>
           <Link href={href}>
-            <a>
+            <a data-testid="card">
               <Box className={classes.container}>
                 <Box className={clsx(classes.info, 'title')}>
                   <p className="line-clamp-2">{title}</p>
