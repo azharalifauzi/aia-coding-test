@@ -24,7 +24,9 @@ describe('GET /api/v1/flickr/photos', () => {
 
 describe('GET /api/v1/flickr/photos/:id', () => {
   it('should gives 404 status if the data not found', async () => {
-    await request(app).get('/api/v1/flickr/photos/random-id-149kl').send().expect(404);
+    const res = await request(app).get('/api/v1/flickr/photos/random-id-149kl').send().expect(404);
+
+    expect(res.body.data).toBeNull();
   });
 
   it('should gives 200 status if the data was found', async () => {
