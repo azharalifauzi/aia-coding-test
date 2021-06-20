@@ -18,12 +18,19 @@ interface Props {
   href: string;
 }
 
-const useStyle = makeStyles({
+const randomizeBackground = (colors: string[]): string => {
+  const randomIdx = Math.floor(Math.random() * 100) % colors.length;
+
+  return colors[randomIdx];
+};
+
+const useStyle = makeStyles(() => ({
   container: {
     position: 'relative',
     cursor: 'pointer',
     borderRadius: 8,
     overflow: 'hidden',
+
     '&:hover .title': {
       opacity: 1,
     },
@@ -62,7 +69,7 @@ const useStyle = makeStyles({
   views: {
     fontSize: '0.875rem',
   },
-});
+}));
 
 const CardPhoto: React.FC<Props> = ({
   src,
@@ -85,7 +92,18 @@ const CardPhoto: React.FC<Props> = ({
         <>
           <Link href={href}>
             <a data-testid="card">
-              <Box className={classes.container}>
+              <Box
+                style={{
+                  background: randomizeBackground([
+                    '#eee',
+                    '#f50057',
+                    '#2196f3',
+                    '#3f51b5',
+                    '#ff9800',
+                  ]),
+                }}
+                className={classes.container}
+              >
                 <Box className={clsx(classes.info, 'title')}>
                   <p className="line-clamp-2">{title}</p>
                 </Box>

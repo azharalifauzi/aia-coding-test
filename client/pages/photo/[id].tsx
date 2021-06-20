@@ -14,6 +14,7 @@ const useStyle = makeStyles((themes) => ({
     borderRadius: '0.5rem',
     overflow: 'hidden',
     marginBlock: '2rem',
+    background: themes.palette.grey[300],
   },
   ownerContaienr: {
     paddingInline: '0',
