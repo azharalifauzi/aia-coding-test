@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { urlSSR } from 'helpers';
 import dayjs from 'dayjs';
 import { LoadingPage } from 'components';
+import Head from 'next/head';
 
 const useStyle = makeStyles({
   imageContainer: {
@@ -105,87 +106,92 @@ const PhotoDetailPage: React.FC<InferGetStaticPropsType<typeof getStaticProps>> 
   if (Router.isFallback) return <LoadingPage />;
 
   return (
-    <Box className={classes.page}>
-      <Box
-        onClick={() => {
-          Router.back();
-        }}
-        component="button"
-        className={classes.backContainer}
-      >
-        <TrendingFlat className={classes.backIcon} />
-        <Typography className="back-text">Back to explore</Typography>
-      </Box>
-      <Container maxWidth="lg">
-        <Box className={classes.imageContainer}>
-          <Image
-            src={initialData.photo.url}
-            layout="responsive"
-            width={16}
-            height={9}
-            alt={initialData.title}
-            objectFit="cover"
-            objectPosition="center"
-          />
-        </Box>
-        <Grid
-          className={classes.ownerContaienr}
-          container
-          justify="space-between"
-          alignItems="center"
+    <>
+      <Head>
+        <title>{initialData.title}</title>
+      </Head>
+      <Box className={classes.page}>
+        <Box
+          onClick={() => {
+            Router.back();
+          }}
+          component="button"
+          className={classes.backContainer}
         >
-          <Grid item>
-            <Grid style={{ gap: '1rem' }} container justify="space-between" alignItems="center">
-              <Box className={classes.avatarContainer}>
-                <Image
-                  src={initialData.owner.avatarurl}
-                  layout="responsive"
-                  width={1}
-                  height={1}
-                  alt="avatar"
-                  objectFit="cover"
-                />
-              </Box>
-              <Box>
-                <Typography style={{ marginBottom: '0.25rem', fontWeight: 700 }}>
-                  {initialData.owner.username}
-                </Typography>
-                <Typography>
-                  {initialData.owner.realname || initialData.owner.username} • {initialData.views}{' '}
-                  views
-                </Typography>
-              </Box>
+          <TrendingFlat className={classes.backIcon} />
+          <Typography className="back-text">Back to explore</Typography>
+        </Box>
+        <Container maxWidth="lg">
+          <Box className={classes.imageContainer}>
+            <Image
+              src={initialData.photo.url}
+              layout="responsive"
+              width={16}
+              height={9}
+              alt={initialData.title}
+              objectFit="cover"
+              objectPosition="center"
+            />
+          </Box>
+          <Grid
+            className={classes.ownerContaienr}
+            container
+            justify="space-between"
+            alignItems="center"
+          >
+            <Grid item>
+              <Grid style={{ gap: '1rem' }} container justify="space-between" alignItems="center">
+                <Box className={classes.avatarContainer}>
+                  <Image
+                    src={initialData.owner.avatarurl}
+                    layout="responsive"
+                    width={1}
+                    height={1}
+                    alt="avatar"
+                    objectFit="cover"
+                  />
+                </Box>
+                <Box>
+                  <Typography style={{ marginBottom: '0.25rem', fontWeight: 700 }}>
+                    {initialData.owner.username}
+                  </Typography>
+                  <Typography>
+                    {initialData.owner.realname || initialData.owner.username} • {initialData.views}{' '}
+                    views
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Button
+                href={initialData.photo.url}
+                download
+                target="_blank"
+                color="secondary"
+                variant="contained"
+              >
+                Download
+              </Button>
             </Grid>
           </Grid>
-          <Grid item>
-            <Button
-              href={initialData.photo.url}
-              download
-              target="_blank"
-              color="secondary"
-              variant="contained"
+          <Box className={classes.descriptionContainer}>
+            <Typography
+              style={{ fontWeight: 700, marginBottom: '0.5rem' }}
+              variant="h5"
+              component="h1"
             >
-              Download
-            </Button>
-          </Grid>
-        </Grid>
-        <Box className={classes.descriptionContainer}>
-          <Typography
-            style={{ fontWeight: 700, marginBottom: '0.5rem' }}
-            variant="h5"
-            component="h1"
-          >
-            {initialData.title}
-          </Typography>
-          <Typography variant="subtitle2" style={{ marginBottom: '0.5rem', color: '#959392' }}>
-            Taken on {dayjs(initialData.dates.taken).format('DD MMMM YYYY')}
-          </Typography>
-          <Typography>
-            <p dangerouslySetInnerHTML={{ __html: initialData.description }}></p>
-          </Typography>
-        </Box>
-      </Container>
-    </Box>
+              {initialData.title}
+            </Typography>
+            <Typography variant="subtitle2" style={{ marginBottom: '0.5rem', color: '#959392' }}>
+              Taken on {dayjs(initialData.dates.taken).format('DD MMMM YYYY')}
+            </Typography>
+            <Typography>
+              <p dangerouslySetInnerHTML={{ __html: initialData.description }}></p>
+            </Typography>
+          </Box>
+        </Container>
+      </Box>
+    </>
   );
 };
 
