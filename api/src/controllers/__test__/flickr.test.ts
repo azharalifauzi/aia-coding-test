@@ -21,3 +21,20 @@ describe('GET /api/v1/flickr/photos', () => {
     expect(res.body.data.page).toEqual(2);
   });
 });
+
+describe('GET /api/v1/flickr/photos/:id', () => {
+  it('should gives 404 status if the data not found', async () => {
+    const res = await request(app).get('/api/v1/flickr/photos/random-id-149kl').send().expect(404);
+
+    expect(res.body.data).toBeNull();
+  });
+
+  it('should gives 200 status if the data was found', async () => {
+    const res = await request(app).get('/api/v1/flickr/photos?limit=1').send().expect(200);
+
+    await request(app)
+      .get(`/api/v1/flickr/photos/${res.body.data.photos[0].id}`)
+      .send()
+      .expect(200);
+  });
+});

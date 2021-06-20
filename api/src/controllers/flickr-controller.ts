@@ -32,3 +32,39 @@ export const getPhotos = async (req: Request, res: Response) => {
     },
   });
 };
+
+export const getPhotoDetail = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const resDetail = await fetch(
+    `https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=${process.env.FLICKR_API_KEY}&photo_id=${id}&format=json&nojsoncallback=1`
+  );
+
+  const dataDetail = await resDetail.json();
+
+  if (dataDetail.code === 1) {
+    res.status(404).send({ message: 'Not Found', data: null });
+    return;
+  }
+
+  res.send({
+    message: 'OK',
+    data: {
+      id: dataDetail.photo.id,
+      photo: {
+        id: dataDetail.photo.id,
+        secret: dataDetail.photo.secret,
+        server: dataDetail.photo.server,
+        url: `https://live.staticflickr.com/${dataDetail.photo.server}/${dataDetail.photo.id}_${dataDetail.photo.secret}_b.jpg`,
+      },
+      title: dataDetail.photo.title._content,
+      description: dataDetail.photo.description._content,
+      views: dataDetail.photo.views,
+      dates: dataDetail.photo.dates,
+      owner: {
+        ...dataDetail.photo.owner,
+        avatarurl: `https://live.staticflickr.com/${dataDetail.photo.owner.iconserver}/buddyicons/${dataDetail.photo.owner.nsid}.jpg`,
+      },
+    },
+  });
+};

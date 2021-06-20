@@ -1,8 +1,9 @@
 import express from 'express';
-import { getPhotos } from '../controllers/flickr-controller';
+import { getPhotos, getPhotoDetail } from '../controllers/flickr-controller';
 
 const router = express.Router();
 
 router.route('/photos').get(getPhotos);
+router.route('/photos/:id').get(getPhotoDetail);
 
 export default router;
