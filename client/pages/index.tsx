@@ -60,7 +60,6 @@ export default function Home() {
     ['photos', search, page],
     async () => {
       let filter = [];
-
       if (search) filter.push(`search=${search}`);
       if (page) filter.push(`page=${page}`);
 
@@ -68,8 +67,19 @@ export default function Home() {
 
       const res = await fetch(`/api/v1/flickr/photos?limit=30${filter.join('&')}`);
 
-      const data = await res.json();
+      if (res.status === 429) {
+        alert('Too many request please try again after 1 hour');
 
+        return {
+          length: 0,
+          maxPage: 1,
+          page: 1,
+          photos: [],
+          total: 1,
+        };
+      }
+
+      const data = await res.json();
       return data.data;
     },
     {
@@ -112,6 +122,7 @@ export default function Home() {
               id="search"
               className={classes.searchInput}
               placeholder="Search photos..."
+              type="search"
             />
             {searchVal ? (
               <Cancel
